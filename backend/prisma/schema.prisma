@@ -1,0 +1,60 @@
+// This is your Prisma schema file
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  role      String   @default("user")
+  uploads   Upload[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Upload {
+  id          String      @id @default(cuid())
+  filename    String
+  droneId     String      // from JSON "drone_id" 
+  date        String      // from JSON "date"
+  location    String      // from JSON "location"
+  status      String      @default("pending")
+  user        User        @relation(fields: [userId], references: [id])
+  userId      String
+  violations  Violation[]
+  processedAt DateTime?
+  createdAt   DateTime    @default(now())
+
+  @@map("uploads")
+}
+
+model Violation {
+  id            String   @id @default(cuid())
+  violationId   String   // from JSON "id" (original violation ID like "v1", "v2")
+  droneId       String   // for easy querying
+  violationType String   // from JSON "type"
+  timestamp     String   // from JSON "timestamp"
+  date          String   // from parent JSON "date"
+  latitude      Float    // from JSON "latitude"
+  longitude     Float    // from JSON "longitude"
+  imageUrl      String   // from JSON "image_url"
+  location      String   // from parent JSON "location"
+  upload        Upload   @relation(fields: [uploadId], references: [id])
+  uploadId      String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("violations")
+}
