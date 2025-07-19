@@ -30,7 +30,7 @@ model Upload {
   droneId     String      // from JSON "drone_id" 
   date        String      // from JSON "date"
   location    String      // from JSON "location"
-  status      String      @default("pending")
+  status      String      //@default("processing")
   user        User        @relation(fields: [userId], references: [id])
   userId      String
   violations  Violation[]
