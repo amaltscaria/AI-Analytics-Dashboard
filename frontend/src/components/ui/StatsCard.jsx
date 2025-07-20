@@ -2,7 +2,8 @@ import { motion } from 'framer-motion';
 const {div: MotionDiv} = motion;
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
 
-const StatsCard = ({ title, value, change, changeType, color }) => {
+// eslint-disable-next-line no-unused-vars
+const StatsCard = ({ title, value, change, changeType, icon: Icon, color }) => {
   const colors = {
     red: 'from-red-500 to-pink-600',
     blue: 'from-blue-500 to-cyan-600',

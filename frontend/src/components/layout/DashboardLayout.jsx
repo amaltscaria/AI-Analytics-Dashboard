@@ -1,41 +1,54 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-const {div: MotionDiv} = motion;
-import { 
-  BarChart3, 
-  Map, 
-  Upload, 
-  Settings, 
-  LogOut, 
-  Menu, 
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+const { div: MotionDiv } = motion;
+import {
+  AlertTriangle,
+  BarChart3,
+  Map,
+  Upload,
+  Settings,
+  LogOut,
+  Menu,
   X,
   Bell,
-  User
-} from 'lucide-react';
-import { useAuth } from '../../hooks/useAuth';
-import toast from 'react-hot-toast';
+  User,
+} from "lucide-react";
+import { useAuth } from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const DashboardLayout = ({ children, activeTab, setActiveTab }) => {
   const { user, logout } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Handle responsive behavior
+  useEffect(() => {
+    const checkSize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkSize();
+    window.addEventListener("resize", checkSize);
+    return () => window.removeEventListener("resize", checkSize);
+  }, []);
 
   const navigation = [
-    { id: 'overview', name: 'Overview', icon: BarChart3 },
-    { id: 'map', name: 'Map View', icon: Map },
-    { id: 'upload', name: 'Upload Data', icon: Upload },
-    { id: 'settings', name: 'Settings', icon: Settings },
+    { id: "overview", name: "Overview", icon: BarChart3 },
+    { id: "violations", name: "All Violations", icon: AlertTriangle }, // ADD THIS
+    { id: "map", name: "Map View", icon: Map },
+    { id: "upload", name: "Upload Data", icon: Upload },
+    { id: "settings", name: "Settings", icon: Settings },
   ];
 
   const handleLogout = () => {
     logout();
-    toast.success('Logged out successfully');
+    toast.success("Logged out successfully");
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen flex bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Mobile sidebar overlay */}
       <AnimatePresence>
-        {sidebarOpen && (
+        {sidebarOpen && isMobile && (
           <MotionDiv
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -50,9 +63,15 @@ const DashboardLayout = ({ children, activeTab, setActiveTab }) => {
 
       {/* Sidebar */}
       <motion.aside
-        initial={{ x: -300 }}
-        animate={{ x: sidebarOpen ? 0 : -300 }}
-        className="fixed inset-y-0 left-0 z-50 w-72 glass-dark border-r border-white/10 lg:translate-x-0 lg:static lg:inset-0"
+        initial={{ x: isMobile ? -300 : 0 }}
+        animate={{
+          x: isMobile ? (sidebarOpen ? 0 : -300) : 0,
+        }}
+        className={`${
+          isMobile ? "fixed" : "relative"
+        } inset-y-0 left-0 z-50 w-72 glass-dark border-r border-white/10 ${
+          isMobile ? "" : "flex-shrink-0"
+        }`}
       >
         <div className="flex h-full flex-col">
           {/* Header */}
@@ -76,7 +95,7 @@ const DashboardLayout = ({ children, activeTab, setActiveTab }) => {
             {navigation.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
-              
+
               return (
                 <motion.button
                   key={item.id}
@@ -86,8 +105,8 @@ const DashboardLayout = ({ children, activeTab, setActiveTab }) => {
                   }}
                   className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${
                     isActive
-                      ? 'bg-gradient-to-r from-blue-500/20 to-purple-600/20 border border-blue-500/30 text-white'
-                      : 'text-gray-400 hover:text-white hover:bg-white/5'
+                      ? "bg-gradient-to-r from-blue-500/20 to-purple-600/20 border border-blue-500/30 text-white"
+                      : "text-gray-400 hover:text-white hover:bg-white/5"
                   }`}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -106,7 +125,9 @@ const DashboardLayout = ({ children, activeTab, setActiveTab }) => {
                 <User size={20} className="text-white" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-white font-medium truncate">{user?.username}</p>
+                <p className="text-white font-medium truncate">
+                  {user?.username}
+                </p>
                 <p className="text-gray-400 text-sm truncate">{user?.email}</p>
               </div>
             </div>
@@ -124,9 +145,9 @@ const DashboardLayout = ({ children, activeTab, setActiveTab }) => {
       </motion.aside>
 
       {/* Main content */}
-      <div className="lg:pl-72">
+      <div className="flex-1 flex flex-col min-w-0 h-screen">
         {/* Top bar */}
-        <header className="glass-dark border-b border-white/10 px-6 py-4">
+        <header className="glass-dark border-b border-white/10 px-6 py-4 flex-shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <button
@@ -136,10 +157,12 @@ const DashboardLayout = ({ children, activeTab, setActiveTab }) => {
                 <Menu size={24} />
               </button>
               <h1 className="text-xl font-semibold text-white capitalize">
-                {activeTab === 'overview' ? 'Dashboard Overview' : activeTab.replace('-', ' ')}
+                {activeTab === "overview"
+                  ? "Dashboard Overview"
+                  : activeTab.replace("-", " ")}
               </h1>
             </div>
-            
+
             <div className="flex items-center space-x-4">
               <motion.button
                 className="relative p-2 text-gray-400 hover:text-white transition-colors"
@@ -149,7 +172,7 @@ const DashboardLayout = ({ children, activeTab, setActiveTab }) => {
                 <Bell size={20} />
                 <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
               </motion.button>
-              
+
               <div className="hidden sm:block text-right">
                 <p className="text-white font-medium">{user?.username}</p>
                 <p className="text-gray-400 text-sm">{user?.role}</p>
@@ -159,9 +182,7 @@ const DashboardLayout = ({ children, activeTab, setActiveTab }) => {
         </header>
 
         {/* Page content */}
-        <main className="p-6">
-          {children}
-        </main>
+        <main className="flex-1 p-6 overflow-y-auto">{children}</main>
       </div>
     </div>
   );

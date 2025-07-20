@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 import AuthHeader from "./AuthHeader.jsx";
 import Input from "../ui//Input.jsx";
 import Button from "../ui/Button.jsx";
+import {motion} from 'framer-motion';
+const {div: MotionDiv} = motion;
 
 const LoginForm = () => {
   const { login, register } = useAuth();
@@ -49,7 +51,7 @@ const LoginForm = () => {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {!isLogin && (
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
@@ -61,7 +63,7 @@ const LoginForm = () => {
               placeholder="Enter your username"
               required={!isLogin}
             />
-          </motion.div>
+          </MotionDiv>
         )}
 
         <Input
