@@ -72,7 +72,6 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  console.log("ppp");
   try {
     //validate input
     const validation = validateLogin(req.body);

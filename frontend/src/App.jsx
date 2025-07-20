@@ -3,7 +3,7 @@ import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./contexts/auth/AuthProvider";
 import Login from "./pages/Login";
 import Dashboard from './pages/Dashboard';
-import ProtectedRoute from "./components/auth/ProtectedRoute";
+import ProtectedRoute from '../src/components/auth/protectedRoute'
 import "./index.css";
 
 function App() {

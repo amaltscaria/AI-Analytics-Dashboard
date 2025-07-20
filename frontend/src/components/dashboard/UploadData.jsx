@@ -5,6 +5,7 @@ import { Upload, FileText, CheckCircle, AlertTriangle, X, RefreshCw } from 'luci
 import { useAuth } from '../../hooks/useAuth';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { API_BASE_URL } from '../../config/api';
 
 const UploadData = () => {
   const { token } = useAuth();
@@ -15,7 +16,7 @@ const UploadData = () => {
 
   const fetchRecentUploads = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/upload', {
+      const response = await axios.get(`${API_BASE_URL}/upload`, {
         headers: { Authorization: `Bearer ${token}` },
         params: { limit: 5 }
       });
@@ -73,7 +74,7 @@ const UploadData = () => {
 
       // Upload to backend
       await axios.post(
-        'http://localhost:3000/api/upload/json',
+        `${API_BASE_URL}/upload/json`,
         jsonData,
         {
           headers: {

@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { useAuth } from "./useAuth";
+import { API_BASE_URL } from "../config/api";
 
 export const useFilteredViolations = () => {
   const { token } = useAuth();
@@ -21,11 +22,11 @@ export const useFilteredViolations = () => {
       setError(null);
 
       const [violationsResponse, statsResponse] = await Promise.all([
-        axios.get("http://localhost:3000/api/violations", {
+        axios.get(`${API_BASE_URL}/violations`, {
           headers: { Authorization: `Bearer ${token}` },
           params: { limit: 1000 }, // Get all violations for client-side filtering
         }),
-        axios.get("http://localhost:3000/api/violations/stats", {
+        axios.get(`${API_BASE_URL}/violations/stats`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -100,7 +101,7 @@ export const useFilteredViolations = () => {
         droneId,
         count: filteredViolations.filter((v) => v.droneId === droneId).length,
       })),
-      violationsByDate
+      violationsByDate,
     };
   }, [filteredViolations]);
 

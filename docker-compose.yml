@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    platform: linux/amd64 
+    environment:
+      POSTGRES_DB: drone_analytics
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  backend:
+    build: ./backend
+    platform: linux/amd64 
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres123@postgres:5432/drone_analytics"
+      JWT_SECRET: "3c56f096b39dbb4112b349304846b9d6977fb605bfe01bf99ab48c98182448d3f7e1ae9fa054d577e7f47bef33a3961b1942abd438a0d553eca2b70f0f1adef8"
+      JWT_EXPIRE: "7d"
+      NODE_ENV: "production"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: >
+      sh -c "
+        echo 'Waiting for database...' &&
+        npx prisma migrate deploy &&
+        echo 'Database migrated successfully!' &&
+        npm start
+      "
+
+  frontend:
+    build: ./frontend
+    platform: linux/amd64 
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
