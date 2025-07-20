@@ -1,0 +1,31 @@
+{
+  "drone_id": "DRONE_ZONE_D_04",
+  "date": "2025-07-16",
+  "location": "Zone D - Warehouse District",
+  "violations": [
+    {
+      "id": "v1",
+      "type": "Smoke Detection",
+      "timestamp": "09:12:05",
+      "latitude": 23.74800,
+      "longitude": 85.98300,
+      "image_url": "https://via.placeholder.com/300/666666/ffffff?text=Warehouse+Smoke"
+    },
+    {
+      "id": "v2",
+      "type": "Unauthorized Person",
+      "timestamp": "12:45:30",
+      "latitude": 23.74805,
+      "longitude": 85.98305,
+      "image_url": "https://via.placeholder.com/300/ff9500/ffffff?text=Loading+Dock+Breach"
+    },
+    {
+      "id": "v3",
+      "type": "Fire Detected",
+      "timestamp": "16:20:15",
+      "latitude": 23.74810,
+      "longitude": 85.98310,
+      "image_url": "https://via.placeholder.com/300/ff4444/ffffff?text=Electrical+Fire"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "drone_id": "DRONE_ZONE_C_03",
+  "date": "2025-07-17",
+  "location": "Zone C - Construction Site",
+  "violations": [
+    {
+      "id": "v1",
+      "type": "No PPE Kit",
+      "timestamp": "10:45:30",
+      "latitude": 23.74850,
+      "longitude": 85.98450,
+      "image_url": "https://via.placeholder.com/300/4488ff/ffffff?text=Missing+Hard+Hat"
+    },
+    {
+      "id": "v2",
+      "type": "No PPE Kit",
+      "timestamp": "11:20:15",
+      "latitude": 23.74855,
+      "longitude": 85.98455,
+      "image_url": "https://via.placeholder.com/300/4488ff/ffffff?text=No+Safety+Vest"
+    },
+    {
+      "id": "v3",
+      "type": "No PPE Kit",
+      "timestamp": "13:15:45",
+      "latitude": 23.74860,
+      "longitude": 85.98460,
+      "image_url": "https://via.placeholder.com/300/4488ff/ffffff?text=No+Safety+Boots"
+    },
+    {
+      "id": "v4",
+      "type": "Unauthorized Person",
+      "timestamp": "15:30:22",
+      "latitude": 23.74865,
+      "longitude": 85.98465,
+      "image_url": "https://via.placeholder.com/300/ff9500/ffffff?text=Visitor+No+Escort"
+    },
+    {
+      "id": "v5",
+      "type": "Fire Detected",
+      "timestamp": "16:45:10",
+      "latitude": 23.74870,
+      "longitude": 85.98470,
+      "image_url": "https://via.placeholder.com/300/ff4444/ffffff?text=Welding+Fire"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "drone_id": "DRONE_ZONE_A_01",
+  "date": "2025-07-19",
+  "location": "Zone A - Industrial Complex",
+  "violations": [
+    {
+      "id": "v1",
+      "type": "Fire Detected",
+      "timestamp": "08:15:32",
+      "latitude": 23.74891,
+      "longitude": 85.98523,
+      "image_url": "https://via.placeholder.com/300/ff4444/ffffff?text=Fire+Emergency"
+    },
+    {
+      "id": "v2",
+      "type": "Smoke Detection",
+      "timestamp": "08:16:45",
+      "latitude": 23.74895,
+      "longitude": 85.98530,
+      "image_url": "https://via.placeholder.com/300/666666/ffffff?text=Smoke+Alert"
+    },
+    {
+      "id": "v3",
+      "type": "Unauthorized Person",
+      "timestamp": "08:20:12",
+      "latitude": 23.74880,
+      "longitude": 85.98515,
+      "image_url": "https://via.placeholder.com/300/ff9500/ffffff?text=Unauthorized"
+    }
+  ]
+}

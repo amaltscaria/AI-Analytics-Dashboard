@@ -1,8 +1,7 @@
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import { validateLogin, validateRegistration } from "../utils/validation";
-import prisma from "../config/prisma";
-import { generateToken } from "../utils/auth";
+import { validateLogin, validateRegistration } from "../utils/validation.js";
+import prisma from "../config/prisma.js";
+import { generateToken } from "../utils/auth.js";
 
 export const register = async (req, res) => {
   try {
@@ -36,7 +35,7 @@ export const register = async (req, res) => {
             : "Username already taken",
       });
     }
-
+    console.log(email, "hi");
     // Hash password and create user
     const hashedPassword = await bcrypt.hash(password, 12);
     const user = await prisma.user.create({
@@ -55,7 +54,7 @@ export const register = async (req, res) => {
     });
 
     // Generate token
-    const token = generateToken(id);
+    const token = generateToken(user.id);
 
     res.status(201).json({
       success: true,
@@ -73,6 +72,7 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
+  console.log("ppp");
   try {
     //validate input
     const validation = validateLogin(req.body);
@@ -100,14 +100,15 @@ export const login = async (req, res) => {
 
     // checkPassword
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!!isPasswordValid) {
+
+    if (!isPasswordValid) {
       return res.status(401).json({
         success: false,
         error: "Invalid email or password",
       });
     }
 
-    const token = generateToken(id);
+    const token = generateToken(user.id);
     const { password: _, ...userWithoutPassword } = user;
 
     res.json({
@@ -122,5 +123,29 @@ export const login = async (req, res) => {
       success: false,
       error: "Internal server error",
     });
+  }
+};
+
+export const getMe = async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: req.userId },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        role: true,
+        createdAt: true,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({ user });
+  } catch (error) {
+    console.error("Get user error:", error);
+    res.status(500).json({ error: "Failed to get user data" });
   }
 };

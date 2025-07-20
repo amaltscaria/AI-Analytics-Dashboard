@@ -71,3 +71,50 @@ export const uploadJSON = async (req, res) => {
     res.status(500).json({ error: "Upload processing failed" });
   }
 };
+
+export const getUploads = async (req, res) => {
+  try {
+    const userId = req.userId; // From JWT middleware
+    const { limit = 10, offset = 0 } = req.query;
+
+    const uploads = await prisma.upload.findMany({
+      where: { userId },
+      include: {
+        _count: {
+          select: { violations: true }
+        }
+      },
+      orderBy: { createdAt: 'desc' },
+      take: parseInt(limit),
+      skip: parseInt(offset)
+    });
+
+    const uploadsWithCounts = uploads.map(upload => ({
+      id: upload.id,
+      filename: upload.filename,
+      droneId: upload.droneId,
+      date: upload.date,
+      location: upload.location,
+      status: upload.status,
+      violationsCount: upload._count.violations,
+      uploadTime: upload.createdAt,
+      processedAt: upload.processedAt
+    }));
+
+    const total = await prisma.upload.count({ where: { userId } });
+
+    res.json({
+      uploads: uploadsWithCounts,
+      pagination: {
+        total,
+        limit: parseInt(limit),
+        offset: parseInt(offset),
+        hasMore: total > parseInt(offset) + uploads.length
+      }
+    });
+
+  } catch (error) {
+    console.error('Get uploads error:', error);
+    res.status(500).json({ error: 'Failed to fetch uploads' });
+  }
+};

@@ -1,0 +1,39 @@
+{
+  "drone_id": "DRONE_ZONE_B_02",
+  "date": "2025-07-18",
+  "location": "Zone B - Restricted Area",
+  "violations": [
+    {
+      "id": "v1",
+      "type": "Unauthorized Person",
+      "timestamp": "14:30:15",
+      "latitude": 23.74920,
+      "longitude": 85.98600,
+      "image_url": "https://via.placeholder.com/300/ff9500/ffffff?text=Intruder+Alert"
+    },
+    {
+      "id": "v2",
+      "type": "Unauthorized Person",
+      "timestamp": "14:32:44",
+      "latitude": 23.74925,
+      "longitude": 85.98605,
+      "image_url": "https://via.placeholder.com/300/ff9500/ffffff?text=Multiple+Intruders"
+    },
+    {
+      "id": "v3",
+      "type": "No PPE Kit",
+      "timestamp": "14:35:20",
+      "latitude": 23.74910,
+      "longitude": 85.98590,
+      "image_url": "https://via.placeholder.com/300/4488ff/ffffff?text=No+Helmet"
+    },
+    {
+      "id": "v4",
+      "type": "No PPE Kit",
+      "timestamp": "14:36:10",
+      "latitude": 23.74912,
+      "longitude": 85.98592,
+      "image_url": "https://via.placeholder.com/300/4488ff/ffffff?text=No+Safety+Gear"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "drone_id": "DRONE_ZONE_E_05",
+  "date": "2025-07-15",
+  "location": "Zone E - Perimeter Security",
+  "violations": [
+    {
+      "id": "v1",
+      "type": "Unauthorized Person",
+      "timestamp": "22:15:44",
+      "latitude": 23.74750,
+      "longitude": 85.98200,
+      "image_url": "https://via.placeholder.com/300/ff9500/ffffff?text=Night+Intruder"
+    },
+    {
+      "id": "v2",
+      "type": "Unauthorized Person",
+      "timestamp": "23:30:12",
+      "latitude": 23.74755,
+      "longitude": 85.98205,
+      "image_url": "https://via.placeholder.com/300/ff9500/ffffff?text=Fence+Breach"
+    },
+    {
+      "id": "v3",
+      "type": "Smoke Detection",
+      "timestamp": "01:45:33",
+      "latitude": 23.74760,
+      "longitude": 85.98210,
+      "image_url": "https://via.placeholder.com/300/666666/ffffff?text=Suspicious+Smoke"
+    },
+    {
+      "id": "v4",
+      "type": "Fire Detected",
+      "timestamp": "02:10:20",
+      "latitude": 23.74765,
+      "longitude": 85.98215,
+      "image_url": "https://via.placeholder.com/300/ff4444/ffffff?text=Arson+Attempt"
+    },
+    {
+      "id": "v5",
+      "type": "No PPE Kit",
+      "timestamp": "03:30:55",
+      "latitude": 23.74770,
+      "longitude": 85.98220,
+      "image_url": "https://via.placeholder.com/300/4488ff/ffffff?text=Guard+No+Gear"
+    },
+    {
+      "id": "v6",
+      "type": "Unauthorized Person",
+      "timestamp": "04:15:10",
+      "latitude": 23.74775,
+      "longitude": 85.98225,
+      "image_url": "https://via.placeholder.com/300/ff9500/ffffff?text=Dawn+Trespasser"
+    }
+  ]
+}
